@@ -139,7 +139,7 @@ int main(void)
 
   wheelVelocityPacket backWheely;
 
-  uint8_t address = 7;
+  uint8_t address = 8;
   uint8_t freqChannel =  0x2A;
   nssHigh(&hspi3);
   HAL_Delay(100);
@@ -178,8 +178,7 @@ int main(void)
 		  kickprev = dataStruct.kickForce;
 
 		  dribbler.Pulse=125*dataStruct.driblerSpeed;
-		  sprintf(smallStrBuffer, "dribler pulse = %i", dribbler.Pulse);
-		  TextOut(smallStrBuffer);
+
 		  if (HAL_TIM_PWM_ConfigChannel(&htim2, &dribbler, TIM_CHANNEL_2) != HAL_OK){
 				 Error_Handler();
 		  }

@@ -648,9 +648,6 @@ void powerUpRX(SPI_HandleTypeDef* spiHandle){
 	//set RX/TX to RX: bit 0 to 1
 	reg00 = setBit(reg00, 0, 1);
 
-	sprintf(smallStrBuffer, "reg00: %x", reg00);
-	TextOut(smallStrBuffer);
-
 	writeReg(spiHandle, 0x00, reg00);
 
 	//put CE pin high ->  start listening
@@ -768,11 +765,17 @@ void initRobo(SPI_HandleTypeDef* spiHandle, uint8_t freqChannel, uint8_t address
 	setRXbufferSize(spiHandle, 8);
 
 	uint8_t addressLong[5] = {0x12, 0x34, 0x56, 0x78, 0x90 + address};
+	//uint8_t addressLong[5] = {0xA8, 0xA8, 0xE1, 0xF0, 0xC6};
 	//set the RX address of channel 1
 	setRXaddress(spiHandle, addressLong, 1);
 
+	//uint8_t reg00 = readReg(spiHandle, 0x00)
+	//reg00 = setBit(reg00, 2, 1);
+	//writeReg(spiHandle, 0, reg00);
+
 	//go to RX mode and start listening
 	powerUpRX(spiHandle);
+
 
 }
 

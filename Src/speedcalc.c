@@ -18,10 +18,10 @@
 //#define _a3  1.0471975512f
 //#define _a4  2.09439510239f
 //#define _a2  -2.09439510239f
-const float _a0 = 240 * 3.1415/180.0;
+const float _a0 = 60 * 3.1415/180.0;
 const float _a1 = 300 * 3.1415/180.0;
-const float _a2 = 60  * 3.1415/180.0;
-const float _a3 = 120 * 3.1415/180.0;
+const float _a2 = 180  * 3.1415/180.0;
+const float _a3 = 300 * 3.1415/180.0;
 #define _R   0.0088f
 #define _r   0.0275f
 
