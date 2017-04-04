@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
 	<name>HansRikFusion</name>
-	<comment />
+	<comment></comment>
 	<projects>
+		<project>ourNRF24</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -24,7 +25,4 @@
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 		<nature>fr.ac6.mcu.ide.core.MCUProjectNature</nature>
 	</natures>
-	<linkedResources>
-		
-	</linkedResources>
 </projectDescription>

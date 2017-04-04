@@ -41,6 +41,7 @@
   ******************************************************************************
   */
 /* Includes ------------------------------------------------------------------*/
+#include <myNRF24.h>
 #include "main.h"
 #include "stm32f3xx_hal.h"
 #include "spi.h"
@@ -49,7 +50,6 @@
 #include "gpio.h"
 
 /* USER CODE BEGIN Includes */
-#include "myNRF24.h"
 #include "TextOut.h"
 #include "string.h"
 #include "commsfpga.h"
@@ -222,8 +222,8 @@ int main(void)
 				TextOut("\n");
 				wheely.velocityWheel1 = intToMotor;
 				wheely.velocityWheel2 = intToMotor;
-				wheely.velocityWheel3 = intToMotor;
-				wheely.velocityWheel4 = intToMotor;
+				wheely.velocityWheel3 = -intToMotor;
+				wheely.velocityWheel4 = -intToMotor;
 
 				stopSending = 0;
 				intToMotor = 0;

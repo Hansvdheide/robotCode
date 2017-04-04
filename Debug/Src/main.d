@@ -1,10 +1,11 @@
 Src/main.o: ../Src/main.c \
- C:/Users/gebruiker/workspace/HansRikFusion/Inc/main.h \
- C:/Users/gebruiker/workspace/HansRikFusion/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h \
- C:/Users/gebruiker/workspace/HansRikFusion/Inc/stm32f3xx_hal_conf.h \
- C:/Users/gebruiker/workspace/HansRikFusion/Inc/main.h \
- C:/Users/gebruiker/workspace/HansRikFusion/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_rcc.h \
- C:/Users/gebruiker/workspace/HansRikFusion/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_def.h \
+ C:/Users/gebruiker/workspace/HansRikFusion/Inc/myNRF24.h \
+ C:/Users/gebruiker/workspace/HansRikFusion/Inc/TextOut.h \
+ C:/Users/gebruiker/workspace/HansRikFusion/Inc/usbd_cdc_if.h \
+ C:/Users/gebruiker/workspace/HansRikFusion/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc/usbd_cdc.h \
+ C:/Users/gebruiker/workspace/HansRikFusion/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h \
+ C:/Users/gebruiker/workspace/HansRikFusion/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h \
+ C:/Users/gebruiker/workspace/HansRikFusion/Inc/usbd_conf.h \
  C:/Users/gebruiker/workspace/HansRikFusion/Drivers/CMSIS/Device/ST/STM32F3xx/Include/stm32f3xx.h \
  C:/Users/gebruiker/workspace/HansRikFusion/Drivers/CMSIS/Device/ST/STM32F3xx/Include/stm32f303xc.h \
  C:/Users/gebruiker/workspace/HansRikFusion/Drivers/CMSIS/Include/core_cm4.h \
@@ -13,6 +14,11 @@ Src/main.o: ../Src/main.c \
  C:/Users/gebruiker/workspace/HansRikFusion/Drivers/CMSIS/Include/core_cmFunc.h \
  C:/Users/gebruiker/workspace/HansRikFusion/Drivers/CMSIS/Include/core_cmSimd.h \
  C:/Users/gebruiker/workspace/HansRikFusion/Drivers/CMSIS/Device/ST/STM32F3xx/Include/system_stm32f3xx.h \
+ C:/Users/gebruiker/workspace/HansRikFusion/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h \
+ C:/Users/gebruiker/workspace/HansRikFusion/Inc/stm32f3xx_hal_conf.h \
+ C:/Users/gebruiker/workspace/HansRikFusion/Inc/main.h \
+ C:/Users/gebruiker/workspace/HansRikFusion/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_rcc.h \
+ C:/Users/gebruiker/workspace/HansRikFusion/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_def.h \
  C:/Users/gebruiker/workspace/HansRikFusion/Drivers/STM32F3xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h \
  C:/Users/gebruiker/workspace/HansRikFusion/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_rcc_ex.h \
  C:/Users/gebruiker/workspace/HansRikFusion/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_gpio.h \
@@ -32,40 +38,35 @@ Src/main.o: ../Src/main.c \
  C:/Users/gebruiker/workspace/HansRikFusion/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_spi_ex.h \
  C:/Users/gebruiker/workspace/HansRikFusion/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_tim.h \
  C:/Users/gebruiker/workspace/HansRikFusion/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_tim_ex.h \
- C:/Users/gebruiker/workspace/HansRikFusion/Inc/spi.h \
- C:/Users/gebruiker/workspace/HansRikFusion/Inc/tim.h \
- C:/Users/gebruiker/workspace/HansRikFusion/Inc/usb_device.h \
- C:/Users/gebruiker/workspace/HansRikFusion/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h \
- C:/Users/gebruiker/workspace/HansRikFusion/Inc/usbd_conf.h \
- C:/Users/gebruiker/workspace/HansRikFusion/Inc/gpio.h \
- C:/Users/gebruiker/workspace/HansRikFusion/Inc/myNRF24.h \
- C:/Users/gebruiker/workspace/HansRikFusion/Inc/TextOut.h \
- C:/Users/gebruiker/workspace/HansRikFusion/Inc/usbd_cdc_if.h \
- C:/Users/gebruiker/workspace/HansRikFusion/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc/usbd_cdc.h \
- C:/Users/gebruiker/workspace/HansRikFusion/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h \
  C:/Users/gebruiker/workspace/HansRikFusion/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h \
  C:/Users/gebruiker/workspace/HansRikFusion/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_core.h \
  C:/Users/gebruiker/workspace/HansRikFusion/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h \
  C:/Users/gebruiker/workspace/HansRikFusion/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ctlreq.h \
  C:/Users/gebruiker/workspace/HansRikFusion/Inc/gpio.h \
  C:/Users/gebruiker/workspace/HansRikFusion/Inc/spi.h \
+ C:/Users/gebruiker/workspace/HansRikFusion/Inc/main.h \
+ C:/Users/gebruiker/workspace/HansRikFusion/Inc/spi.h \
+ C:/Users/gebruiker/workspace/HansRikFusion/Inc/tim.h \
+ C:/Users/gebruiker/workspace/HansRikFusion/Inc/usb_device.h \
+ C:/Users/gebruiker/workspace/HansRikFusion/Inc/gpio.h \
  C:/Users/gebruiker/workspace/HansRikFusion/Inc/TextOut.h \
  C:/Users/gebruiker/workspace/HansRikFusion/Inc/commsfpga.h \
  C:/Users/gebruiker/workspace/HansRikFusion/Inc/speedCalc.h \
- C:/Users/gebruiker/workspace/HansRikFusion/Inc/myNRF24.h \
  C:/Users/gebruiker/workspace/HansRikFusion/Inc/commsfpga.h
 
-C:/Users/gebruiker/workspace/HansRikFusion/Inc/main.h:
+C:/Users/gebruiker/workspace/HansRikFusion/Inc/myNRF24.h:
 
-C:/Users/gebruiker/workspace/HansRikFusion/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h:
+C:/Users/gebruiker/workspace/HansRikFusion/Inc/TextOut.h:
 
-C:/Users/gebruiker/workspace/HansRikFusion/Inc/stm32f3xx_hal_conf.h:
+C:/Users/gebruiker/workspace/HansRikFusion/Inc/usbd_cdc_if.h:
 
-C:/Users/gebruiker/workspace/HansRikFusion/Inc/main.h:
+C:/Users/gebruiker/workspace/HansRikFusion/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc/usbd_cdc.h:
 
-C:/Users/gebruiker/workspace/HansRikFusion/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_rcc.h:
+C:/Users/gebruiker/workspace/HansRikFusion/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h:
 
-C:/Users/gebruiker/workspace/HansRikFusion/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_def.h:
+C:/Users/gebruiker/workspace/HansRikFusion/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h:
+
+C:/Users/gebruiker/workspace/HansRikFusion/Inc/usbd_conf.h:
 
 C:/Users/gebruiker/workspace/HansRikFusion/Drivers/CMSIS/Device/ST/STM32F3xx/Include/stm32f3xx.h:
 
@@ -82,6 +83,16 @@ C:/Users/gebruiker/workspace/HansRikFusion/Drivers/CMSIS/Include/core_cmFunc.h:
 C:/Users/gebruiker/workspace/HansRikFusion/Drivers/CMSIS/Include/core_cmSimd.h:
 
 C:/Users/gebruiker/workspace/HansRikFusion/Drivers/CMSIS/Device/ST/STM32F3xx/Include/system_stm32f3xx.h:
+
+C:/Users/gebruiker/workspace/HansRikFusion/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h:
+
+C:/Users/gebruiker/workspace/HansRikFusion/Inc/stm32f3xx_hal_conf.h:
+
+C:/Users/gebruiker/workspace/HansRikFusion/Inc/main.h:
+
+C:/Users/gebruiker/workspace/HansRikFusion/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_rcc.h:
+
+C:/Users/gebruiker/workspace/HansRikFusion/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_def.h:
 
 C:/Users/gebruiker/workspace/HansRikFusion/Drivers/STM32F3xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h:
 
@@ -121,28 +132,6 @@ C:/Users/gebruiker/workspace/HansRikFusion/Drivers/STM32F3xx_HAL_Driver/Inc/stm3
 
 C:/Users/gebruiker/workspace/HansRikFusion/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_tim_ex.h:
 
-C:/Users/gebruiker/workspace/HansRikFusion/Inc/spi.h:
-
-C:/Users/gebruiker/workspace/HansRikFusion/Inc/tim.h:
-
-C:/Users/gebruiker/workspace/HansRikFusion/Inc/usb_device.h:
-
-C:/Users/gebruiker/workspace/HansRikFusion/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h:
-
-C:/Users/gebruiker/workspace/HansRikFusion/Inc/usbd_conf.h:
-
-C:/Users/gebruiker/workspace/HansRikFusion/Inc/gpio.h:
-
-C:/Users/gebruiker/workspace/HansRikFusion/Inc/myNRF24.h:
-
-C:/Users/gebruiker/workspace/HansRikFusion/Inc/TextOut.h:
-
-C:/Users/gebruiker/workspace/HansRikFusion/Inc/usbd_cdc_if.h:
-
-C:/Users/gebruiker/workspace/HansRikFusion/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc/usbd_cdc.h:
-
-C:/Users/gebruiker/workspace/HansRikFusion/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h:
-
 C:/Users/gebruiker/workspace/HansRikFusion/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h:
 
 C:/Users/gebruiker/workspace/HansRikFusion/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_core.h:
@@ -155,12 +144,20 @@ C:/Users/gebruiker/workspace/HansRikFusion/Inc/gpio.h:
 
 C:/Users/gebruiker/workspace/HansRikFusion/Inc/spi.h:
 
+C:/Users/gebruiker/workspace/HansRikFusion/Inc/main.h:
+
+C:/Users/gebruiker/workspace/HansRikFusion/Inc/spi.h:
+
+C:/Users/gebruiker/workspace/HansRikFusion/Inc/tim.h:
+
+C:/Users/gebruiker/workspace/HansRikFusion/Inc/usb_device.h:
+
+C:/Users/gebruiker/workspace/HansRikFusion/Inc/gpio.h:
+
 C:/Users/gebruiker/workspace/HansRikFusion/Inc/TextOut.h:
 
 C:/Users/gebruiker/workspace/HansRikFusion/Inc/commsfpga.h:
 
 C:/Users/gebruiker/workspace/HansRikFusion/Inc/speedCalc.h:
-
-C:/Users/gebruiker/workspace/HansRikFusion/Inc/myNRF24.h:
 
 C:/Users/gebruiker/workspace/HansRikFusion/Inc/commsfpga.h:

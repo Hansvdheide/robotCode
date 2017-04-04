@@ -6,10 +6,10 @@
  */
 
 #include "stm32f3xx_hal.h"
-#include "myNRF24.h"
 #include "speedcalc.h"
 #include "commsfpga.h"
 #include <math.h>
+#include <myNRF24.h>
 #define _POLE_PAIRS 8						// Amount of EL rotations for 1 mechanical rotation
 #define _HALL_C_PER_ELROT 6			// Amount of changes in hall effect sensors for 1 EL rotation
 #define _MECH_REDUCTION 3 			// Amount of mechanical gear reduction 1:M
@@ -18,10 +18,10 @@
 //#define _a3  1.0471975512f
 //#define _a4  2.09439510239f
 //#define _a2  -2.09439510239f
-const float _a0 = 60 * 3.1415/180.0;
+const float _a0 = 240 * 3.1415/180.0;
 const float _a1 = 300 * 3.1415/180.0;
-const float _a2 = 180  * 3.1415/180.0;
-const float _a3 = 300 * 3.1415/180.0;
+const float _a2 = 60  * 3.1415/180.0;
+const float _a3 = 120 * 3.1415/180.0;
 #define _R   0.0088f
 #define _r   0.0275f
 

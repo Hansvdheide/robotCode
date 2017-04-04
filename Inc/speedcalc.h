@@ -7,8 +7,8 @@
 
 #ifndef SPEEDCALC_H_
 #define SPEEDCALC_H_
+#include <myNRF24.h>
 #include "stm32f3xx_hal.h"
-#include "myNRF24.h"
 #include "commsfpga.h"
 
 // splits a polar vector into a Carthesian one

@@ -31,6 +31,7 @@ Src/speedcalc.o: ../Src/speedcalc.c \
  C:/Users/gebruiker/workspace/HansRikFusion/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_spi_ex.h \
  C:/Users/gebruiker/workspace/HansRikFusion/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_tim.h \
  C:/Users/gebruiker/workspace/HansRikFusion/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_tim_ex.h \
+ C:/Users/gebruiker/workspace/HansRikFusion/Inc/speedcalc.h \
  C:/Users/gebruiker/workspace/HansRikFusion/Inc/myNRF24.h \
  C:/Users/gebruiker/workspace/HansRikFusion/Inc/TextOut.h \
  C:/Users/gebruiker/workspace/HansRikFusion/Inc/usbd_cdc_if.h \
@@ -44,8 +45,6 @@ Src/speedcalc.o: ../Src/speedcalc.c \
  C:/Users/gebruiker/workspace/HansRikFusion/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ctlreq.h \
  C:/Users/gebruiker/workspace/HansRikFusion/Inc/gpio.h \
  C:/Users/gebruiker/workspace/HansRikFusion/Inc/spi.h \
- C:/Users/gebruiker/workspace/HansRikFusion/Inc/speedcalc.h \
- C:/Users/gebruiker/workspace/HansRikFusion/Inc/myNRF24.h \
  C:/Users/gebruiker/workspace/HansRikFusion/Inc/commsfpga.h \
  C:/Users/gebruiker/workspace/HansRikFusion/Inc/commsfpga.h
 
@@ -113,6 +112,8 @@ C:/Users/gebruiker/workspace/HansRikFusion/Drivers/STM32F3xx_HAL_Driver/Inc/stm3
 
 C:/Users/gebruiker/workspace/HansRikFusion/Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_tim_ex.h:
 
+C:/Users/gebruiker/workspace/HansRikFusion/Inc/speedcalc.h:
+
 C:/Users/gebruiker/workspace/HansRikFusion/Inc/myNRF24.h:
 
 C:/Users/gebruiker/workspace/HansRikFusion/Inc/TextOut.h:
@@ -138,10 +139,6 @@ C:/Users/gebruiker/workspace/HansRikFusion/Middlewares/ST/STM32_USB_Device_Libra
 C:/Users/gebruiker/workspace/HansRikFusion/Inc/gpio.h:
 
 C:/Users/gebruiker/workspace/HansRikFusion/Inc/spi.h:
-
-C:/Users/gebruiker/workspace/HansRikFusion/Inc/speedcalc.h:
-
-C:/Users/gebruiker/workspace/HansRikFusion/Inc/myNRF24.h:
 
 C:/Users/gebruiker/workspace/HansRikFusion/Inc/commsfpga.h:
 

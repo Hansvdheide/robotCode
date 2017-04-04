@@ -8,7 +8,7 @@
 
 
 
-#include "myNRF24.h"
+#include <myNRF24.h>
 #include <string.h>
 
 //*************************auxillery functions**********************************//
@@ -841,8 +841,11 @@ void waitAck(SPI_HandleTypeDef* spiHandle, uint8_t roboID){
 void roboCallback(SPI_HandleTypeDef* spiHandle, dataPacket* dataStruct){
 	uint8_t dataArray[8];
 
+
+
 	ceLow(spiHandle);
 	readData(spiHandle, dataArray, 8);
+
 	dataStruct->robotID = dataArray[0] >> 4;
 	dataStruct->robotVelocity = ((dataArray[0] & 0x0F) << 9) + (dataArray[1] << 1) + ((dataArray[2] & 0x80) >> 7);
 	dataStruct->movingDirection = ((dataArray[2] & 0x7F) << 2) + ((dataArray[3] & 0xC0) >> 6);
