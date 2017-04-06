@@ -119,9 +119,9 @@ int main(void)
   }
 
   HAL_TIM_PWM_Start(&htim2,TIM_CHANNEL_2);
-  while(!HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0)){
+  /*while(!HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0)){
 	  HAL_Delay(1);
-  }
+  }*/
   fun();
 
 
@@ -139,7 +139,7 @@ int main(void)
 
   wheelVelocityPacket backWheely;
 
-  uint8_t address = 8;
+  uint8_t address = 5;
   uint8_t freqChannel =  0x2A;
   nssHigh(&hspi3);
   HAL_Delay(100);
@@ -154,6 +154,7 @@ int main(void)
 
 
   uint8_t stopSending = 0;
+  int breakCnt = 0;
   dataPacket dataStruct;
 
 
@@ -165,6 +166,7 @@ int main(void)
 	  }
 
 	  if(irqRead(&hspi3)){
+		  breakCnt = 0;
 		  roboCallback(&hspi3, &dataStruct);
 
 		  //first time kick
@@ -197,6 +199,15 @@ int main(void)
 
 	  //REMOVED DELAY
 	  HAL_Delay(1);
+	if(breakCnt == 250){
+		wheely.velocityWheel1 = 0;
+		wheely.velocityWheel2 = 0;
+		wheely.velocityWheel3 = 0;
+		wheely.velocityWheel4 = 0;
+		initRobo(&hspi3, 0x2A, address);
+		breakCnt = 0;
+	}
+	//breakCnt++;
 
 
 	if(usbLength != 0){
@@ -301,9 +312,6 @@ int main(void)
 			sprintf(smallStrBuffer, "wheely: %i, %i, %i, %i,", wheely.velocityWheel1, wheely.velocityWheel2, wheely.velocityWheel3, wheely.velocityWheel4);
 			TextOut(smallStrBuffer);
 			sprintf(smallStrBuffer, "%i, %i, %i, %i, %x\n", backWheely.velocityWheel1, backWheely.velocityWheel2, backWheely.velocityWheel3, backWheely.velocityWheel4, backWheely.enablesWheels);
-			TextOut(smallStrBuffer);
-			regTest = readReg(&hspi3, 0x05);
-			sprintf(smallStrBuffer, "reg5: %i\n", regTest);
 			TextOut(smallStrBuffer);
 		}
 		//sprintf(smallStrBuffer, "%u, %u, %u, %u, %x\n", (unsigned int)wheely.velocityWheel1, (unsigned int)wheely.velocityWheel2, wheely.velocityWheel3, wheely.velocityWheel4, wheely.enablesWheels);
@@ -410,7 +418,6 @@ void shoot(uint8_t intensity, SPI_HandleTypeDef* spiHandle, uint8_t freqChannel,
 	}
 
 	HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_1);
-	TextOut("GOL!!!!111!!\n");
 	HAL_Delay(10);
 	initRobo(spiHandle, freqChannel, address);
 }
