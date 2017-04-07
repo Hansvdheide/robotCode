@@ -207,7 +207,7 @@ int main(void)
 		initRobo(&hspi3, 0x2A, address);
 		breakCnt = 0;
 	}
-	//breakCnt++;
+	breakCnt++;
 
 
 	if(usbLength != 0){

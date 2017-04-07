@@ -46,8 +46,8 @@ void calcMotorRaw(wheelVelocityPacket* calcPacket, float vx, float vy, uint16_t 
 	float vxMPerSec = vx;
 	float vyMPerSec = vy;
 
-	sprintf(smallStrBuffer, "vxMPerSec:  %f,   vyMPerSec:  %f\n", vxMPerSec, vyMPerSec);
-	TextOut(smallStrBuffer);
+	//sprintf(smallStrBuffer, "vxMPerSec:  %f,   vyMPerSec:  %f\n", vxMPerSec, vyMPerSec);
+	//TextOut(smallStrBuffer);
 
 	float wheelScalar = 1/_r;
 	float angularComponent;
@@ -67,13 +67,13 @@ void calcMotorRaw(wheelVelocityPacket* calcPacket, float vx, float vy, uint16_t 
 
 	angularComponent = rotSign*_R*wRadPerSec;
 
-	speedmotor[0] = (-cos(_a0)*vy + sin(_a0)*vx + angularComponent)*wheelScalar;
+	speedmotor[0] = (-cos(_a0)*vy*1.4 + sin(_a0)*vx + angularComponent)*wheelScalar;
 	calcPacket->velocityWheel1=calcFPGAFromRPS(speedmotor[0] / (2*PI));
-	speedmotor[1] = (-cos(_a1)*vy + sin(_a1)*vx + angularComponent)*wheelScalar;
+	speedmotor[1] = (-cos(_a1)*vy *1.4+ sin(_a1)*vx + angularComponent)*wheelScalar;
 	calcPacket->velocityWheel2=calcFPGAFromRPS(speedmotor[1] / (2*PI));
-	speedmotor[2] = (-cos(_a2)*vy + sin(_a2)*vx + angularComponent)*wheelScalar;
+	speedmotor[2] = (-cos(_a2)*vy*1.4 + sin(_a2)*vx + angularComponent)*wheelScalar;
 	calcPacket->velocityWheel3=calcFPGAFromRPS(speedmotor[2] / (2*PI));
-    speedmotor[3] = (-cos(_a3)*vy + sin(_a3)*vx + angularComponent)*wheelScalar;
+    speedmotor[3] = (-cos(_a3)*vy*1.4 + sin(_a3)*vx + angularComponent)*wheelScalar;
     calcPacket->velocityWheel4=calcFPGAFromRPS(speedmotor[3] / (2*PI));
 
 
