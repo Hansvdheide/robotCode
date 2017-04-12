@@ -139,7 +139,7 @@ int main(void)
 
   wheelVelocityPacket backWheely;
 
-  uint8_t address = 5;
+  uint8_t address = 7;
   uint8_t freqChannel =  0x2A;
   nssHigh(&hspi3);
   HAL_Delay(100);
@@ -262,6 +262,17 @@ int main(void)
 				 }
 
 				 HAL_TIM_PWM_Start(&htim2,TIM_CHANNEL_2);
+			}
+			else if(usbData[i] == 'i'){
+				if(intToMotor >= 0 && intToMotor <= 9){
+					address = intToMotor;
+					initRobo(&hspi3, freqChannel, address);
+					sprintf(smallStrBuffer, "address = %i\n", intToMotor);
+					TextOut(smallStrBuffer);
+				}
+				else{
+					TextOut("error: id should be between 0 and 9");
+				}
 			}
 			else if(usbData[i] == 'p'){
 				if(showPacket == 0){
