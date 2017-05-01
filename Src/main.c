@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * File Name          : main.c
+f  * File Name          : main.c
   * Description        : Main program body
   ******************************************************************************
   *
@@ -139,7 +139,7 @@ int main(void)
 
   wheelVelocityPacket backWheely;
 
-  uint8_t address = 7;
+  uint8_t address = 3;
   uint8_t freqChannel =  0x2A;
   nssHigh(&hspi3);
   HAL_Delay(100);
@@ -173,7 +173,10 @@ int main(void)
 
 
 		  if (dataStruct.kickForce != 0 && kickprev!=dataStruct.kickForce){
+
 			  shoot(dataStruct.kickForce, &hspi3, freqChannel, address);
+
+
 		  }
 		  else{}
 
@@ -187,6 +190,8 @@ int main(void)
 
 		  HAL_TIM_PWM_Start(&htim2,TIM_CHANNEL_2);
 		  if(showPacket){
+			  //sprintf(smallStrBuffer, "%i\n", dataStruct.kickForce);
+			  //TextOut(smallStrBuffer);
 			  printDataStruct(&dataStruct);
 		  }
 		  //TextOut("Hoera!\n");
@@ -245,7 +250,9 @@ int main(void)
 				negative = 1;
 			}
 			else if(usbData[i] == 's'){
+
 				shoot(intToMotor, &hspi3, freqChannel, address);
+
 				stopSending = 0;
 				intToMotor = 0;
 
@@ -303,6 +310,9 @@ int main(void)
 					showFPGAdebug = 0;
 					TextOut("showFPGAdebug disabled\n");
 				}
+			}
+			else if(usbData[i] == 'r'){
+				printAllRegisters(&hspi3);
 			}
 			else if(usbData[i] != 0){
 				TextOut("no number send\n");
@@ -415,22 +425,37 @@ void shoot(uint8_t intensity, SPI_HandleTypeDef* spiHandle, uint8_t freqChannel,
 	kickpulse.OCIdleState = TIM_OCIDLESTATE_RESET;
 	kickpulse.OCNIdleState = TIM_OCNIDLESTATE_RESET;
 
-	kickpulse.Pulse = intensity;
+	//kickpulse.Pulse = intensity;
+	int delay;
+	if(intensity > 126){
+		kickpulse.Pulse = 250;
+		delay = 40;
+		TextOut("hard\n");
+	}
+	else{
+		kickpulse.Pulse = intensity;
+		delay = 10;
+		TextOut("zacht\n");
+	}
 
 	if (HAL_TIM_PWM_ConfigChannel(&htim1, &kickpulse, TIM_CHANNEL_1) != HAL_OK){
 		Error_Handler();
 	}
 
 	HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_1);
-	HAL_Delay(30);//jaja komt wel goed
+	HAL_Delay(delay);//jaja komt wel goed
 	kickpulse.Pulse=0;
 	if (HAL_TIM_PWM_ConfigChannel(&htim1, &kickpulse, TIM_CHANNEL_1) != HAL_OK){
 		Error_Handler();
 	}
-
-	HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_1);
 	HAL_Delay(10);
-	initRobo(spiHandle, freqChannel, address);
+	HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_1);
+
+	//wheely.velocityWheel1 = intToMotor;
+	//wheely.velocityWheel2 = intToMotor;
+	//wheely.velocityWheel3 = -intToMotor;
+	//wheely.velocityWheel4 = -intToMotor;
+	//initRobo(spiHandle, freqChannel, address);
 }
 
 /* USER CODE END 4 */

@@ -134,6 +134,7 @@ uint8_t irqRead(SPI_HandleTypeDef* spiHandle){
 		}
 		else{
 			return 0;*/
+		return 12;
 		}
 	else{
 		if(!HAL_GPIO_ReadPin(GPIOD, IRQ_SPI3_Pin)){
@@ -710,6 +711,18 @@ void readData(SPI_HandleTypeDef* spiHandle, uint8_t* receiveBuffer, uint8_t leng
 
 }
 
+void setLowSpeed(SPI_HandleTypeDef* spiHandle){
+	uint8_t reg06 = readReg(spiHandle, 0x06);
+	reg06 = setBit(reg06, 5, 1);
+	reg06 = setBit(reg06, 3, 0);
+	writeReg(spiHandle, 0x06, reg06);
+}
+
+void enableAutoRetransmitSlow(SPI_HandleTypeDef* spiHandle){
+	//uint8_t reg04 = 0xf3;
+	writeReg(spiHandle, 0x04, 0xff);
+}
+
 //---------------------------------debug----------------------------------//
 
 void printAllRegisters(SPI_HandleTypeDef* spiHandle){
@@ -769,9 +782,9 @@ void initRobo(SPI_HandleTypeDef* spiHandle, uint8_t freqChannel, uint8_t address
 	//set the RX address of channel 1
 	setRXaddress(spiHandle, addressLong, 1);
 
-	//uint8_t reg00 = readReg(spiHandle, 0x00)
-	//reg00 = setBit(reg00, 2, 1);
-	//writeReg(spiHandle, 0, reg00);
+	setLowSpeed(spiHandle);
+
+	enableAutoRetransmitSlow(spiHandle);
 
 	//go to RX mode and start listening
 	powerUpRX(spiHandle);
@@ -798,6 +811,8 @@ void initBase(SPI_HandleTypeDef* spiHandle, uint8_t freqChannel, uint8_t address
 
 	//set the TX address of
 	setTXaddress(spiHandle, address);
+
+	//setLowSpeed(spiHandle);
 
 	//go to TX mode and be ready to listen
 	powerUpTX(spiHandle);
@@ -845,6 +860,9 @@ void roboCallback(SPI_HandleTypeDef* spiHandle, dataPacket* dataStruct){
 
 	ceLow(spiHandle);
 	readData(spiHandle, dataArray, 8);
+	//clear RX interrupt
+	writeReg(spiHandle, 0x07, 0x4E);
+	ceHigh(spiHandle);
 
 	dataStruct->robotID = dataArray[0] >> 4;
 	dataStruct->robotVelocity = ((dataArray[0] & 0x0F) << 9) + (dataArray[1] << 1) + ((dataArray[2] & 0x80) >> 7);
@@ -857,12 +875,6 @@ void roboCallback(SPI_HandleTypeDef* spiHandle, dataPacket* dataStruct){
 	dataStruct->forced = dataArray[6] & 0x10;
 	dataStruct->driblerDirection = dataArray[6] & 0x8;
 	dataStruct->driblerSpeed = dataArray[6] & 0x7;
-
-
-	//clear RX interrupt
-	writeReg(spiHandle, 0x07, 0x4E);
-
-	ceHigh(spiHandle);
 
 
 

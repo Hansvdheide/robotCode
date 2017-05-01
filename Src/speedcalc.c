@@ -77,21 +77,6 @@ void calcMotorRaw(wheelVelocityPacket* calcPacket, float vx, float vy, uint16_t 
     calcPacket->velocityWheel4=calcFPGAFromRPS(speedmotor[3] / (2*PI));
 
 
-	/*for(int i = 0; i < 4; i++){
-		sprintf(smallStrBuffer, "speed %i: %f;\n", i, speedmotor[i] *_r);
-		TextOut(smallStrBuffer);
-	}*/
-
-	/*
-	speedmotor[0] = (-1/sin(_a1)*vx + -1/cos(_a1)*vy + angularComponent)*wheelScalar;
-	calcPacket->velocityWheel1=calcFPGAFromRPS(speedmotor[0]);
-    speedmotor[1] = -1*((-1/sin(_a2)*vx + -1/cos(_a2)*vy + angularComponent)*wheelScalar);
-	calcPacket->velocityWheel2=calcFPGAFromRPS(speedmotor[1]);
-	speedmotor[2] = (-1/sin(_a3)*vx + -1/cos(_a3)*vy + angularComponent)*wheelScalar;
-	calcPacket->velocityWheel3=calcFPGAFromRPS(speedmotor[2]);
-	speedmotor[3] = -1*((-1/sin(_a4)*vx + -1/cos(_a4)*vy + angularComponent)*wheelScalar);
-	calcPacket->velocityWheel4=calcFPGAFromRPS(speedmotor[3]);*/
-
 }
 void calcMotorStefan(dataPacket *dataStruct, wheelVelocityPacket *PacketSpeed){
 //	float xSpeed=0;

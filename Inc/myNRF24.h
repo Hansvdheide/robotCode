@@ -145,6 +145,8 @@ void TXinterrupts(SPI_HandleTypeDef* spiHandle);;
 //and those for the TX functions not
 void RXinterrupts(SPI_HandleTypeDef* spiHandle);
 
+void enableAutoRetransmitSlow(SPI_HandleTypeDef* spiHandle);
+
 //---------------------------------modes----------------------------------//
 
 //power down the device. SPI stays active.
@@ -177,6 +179,8 @@ void sendData(SPI_HandleTypeDef* spiHandle, uint8_t data[], uint8_t length);
 
 //read a byte from the buffer. only used in RX mode
 void readData(SPI_HandleTypeDef* spiHandle, uint8_t* receiveBuffer, uint8_t length);
+
+void setLowSpeed(SPI_HandleTypeDef* spiHandle);
 
 
 //---------------------------------debug----------------------------------//
