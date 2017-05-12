@@ -163,6 +163,9 @@ int main(void)
 	  if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0)){
 		  initRobo(&hspi3, 0x2A, address);
 		  printAllRegisters(&hspi3);
+		  shoot(1, &hspi3, freqChannel, address);
+		  //HAL_Delay(1000);
+		  fun();
 	  }
 
 	  if(irqRead(&hspi3)){
@@ -212,7 +215,7 @@ int main(void)
 		initRobo(&hspi3, 0x2A, address);
 		breakCnt = 0;
 	}
-	breakCnt++;
+	//breakCnt++;
 
 
 	if(usbLength != 0){
@@ -427,16 +430,9 @@ void shoot(uint8_t intensity, SPI_HandleTypeDef* spiHandle, uint8_t freqChannel,
 
 	//kickpulse.Pulse = intensity;
 	int delay;
-	if(intensity > 126){
-		kickpulse.Pulse = 250;
-		delay = 40;
-		TextOut("hard\n");
-	}
-	else{
-		kickpulse.Pulse = intensity;
-		delay = 10;
-		TextOut("zacht\n");
-	}
+
+	kickpulse.Pulse = 15;
+	delay = 3;
 
 	if (HAL_TIM_PWM_ConfigChannel(&htim1, &kickpulse, TIM_CHANNEL_1) != HAL_OK){
 		Error_Handler();

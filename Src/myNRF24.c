@@ -852,14 +852,11 @@ void waitAck(SPI_HandleTypeDef* spiHandle, uint8_t roboID){
 
 
 
-
 void roboCallback(SPI_HandleTypeDef* spiHandle, dataPacket* dataStruct){
-	uint8_t dataArray[8];
-
-
+	uint8_t dataArray[12];
 
 	ceLow(spiHandle);
-	readData(spiHandle, dataArray, 8);
+	readData(spiHandle, dataArray, 12);
 	//clear RX interrupt
 	writeReg(spiHandle, 0x07, 0x4E);
 	ceHigh(spiHandle);
@@ -875,13 +872,12 @@ void roboCallback(SPI_HandleTypeDef* spiHandle, dataPacket* dataStruct){
 	dataStruct->forced = dataArray[6] & 0x10;
 	dataStruct->driblerDirection = dataArray[6] & 0x8;
 	dataStruct->driblerSpeed = dataArray[6] & 0x7;
+	dataStruct->currentRobotVelocity = (dataArray[8] << 5) + ((dataArray[9] & 0xF8) >> 3);
+	dataStruct->currentMovingDirection = ((dataArray[9] & 0x07) << 6) + ((dataArray[10] & 0xFC) >> 2);
+	dataStruct->currentRotationDirection = (dataArray[11] & 0x40) >> 6;
+	dataStruct->currentAngularVelocity = ((dataArray[10] &0x03) << 9) + (dataArray[11] << 1) + (dataArray[12] & 0x80);
+	dataStruct->videoDataSend = (dataArray[7] & 80) >> 7;
 
-
-
-	/*for(int i = 0; i < 8; i++){
-		sprintf(smallStrBuffer, "%i\n", dataArray[i]);
-		TextOut(smallStrBuffer);
-	}*/
 }
 
 void printDataStruct(dataPacket* dataStruct){
@@ -907,6 +903,13 @@ void printDataStruct(dataPacket* dataStruct){
 	TextOut(smallStrBuffer);
 	sprintf(smallStrBuffer, "driblerSpeed = %i\n", dataStruct->driblerSpeed);
 	TextOut(smallStrBuffer);
+	sprintf(smallStrBuffer, "currentRobotVelocity = %i\n", dataStruct->currentRobotVelocity);
+	TextOut(smallStrBuffer);
+	sprintf(smallStrBuffer, "currentMovingDirection = %i\n", dataStruct->currentMovingDirection);
+	TextOut(smallStrBuffer);
+	sprintf(smallStrBuffer, "currentRotationDirection = %i\n", dataStruct->currentRotationDirection);
+	TextOut(smallStrBuffer);
+	sprintf(smallStrBuffer, "currentAngularVelocity = %i\n", dataStruct->currentAngularVelocity);
 }
 
 

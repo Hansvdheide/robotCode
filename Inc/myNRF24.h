@@ -28,6 +28,12 @@ typedef struct dataPacket {
   uint8_t kick; // 0 = do not kick; 1 = kick according to forced and chipper
   uint8_t driblerDirection; // 0 = cw; 1 = ccw;
   uint8_t driblerSpeed; // between 0 and 7
+  uint16_t currentRobotVelocity;
+  uint16_t currentMovingDirection; // resolution: 2pi/512 radians
+  uint8_t currentRotationDirection; //0 = cw; 1 = ccw;
+  uint16_t currentAngularVelocity; //0 to 2047 deg/s
+  uint8_t videoDataSend;
+
 } dataPacket;
 
 struct ackPacket {
