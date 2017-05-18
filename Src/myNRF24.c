@@ -467,11 +467,11 @@ void NRFinit(SPI_HandleTypeDef* spiHandle){
 	//enable RX pipe 0 and 1, disable all other pipes
 	writeReg(spiHandle, 0x02, 0x03);
 
-	//set RX pipe with of pipe 0 to 1 byte.
-	writeReg(spiHandle, 0x11, 0x01);
+	//set RX pipe with of pipe 0 to 1 byte. But we do not have ACK-size
+	//writeReg(spiHandle, 0x11, 0x01);
 
 	//set RX pipe with of pipe 1 to 1 byte.
-	writeReg(spiHandle, 0x12, 0x01);
+	//writeReg(spiHandle, 0x12, 0x01);
 
 	flushRX(spiHandle);
 	flushTX(spiHandle);
@@ -534,7 +534,7 @@ void disableDataPipe(SPI_HandleTypeDef* spiHandle, uint8_t pipeNumber){
 		uint8_t reg02 = readReg(spiHandle, 0x02);
 		reg02 = setBit(reg02, pipeNumber, 0);
 		writeReg(spiHandle, 0x02, reg02);// disable pipe
-		writeReg(spiHandle, 0x11 + pipeNumber, 0); //set buffer size to 0;
+		writeReg(spiHandle, 0x11 + pipeNumber, 0); //set ack size to 0;
 	}
 }
 
@@ -720,7 +720,7 @@ void setLowSpeed(SPI_HandleTypeDef* spiHandle){
 
 void enableAutoRetransmitSlow(SPI_HandleTypeDef* spiHandle){
 	//uint8_t reg04 = 0xf3;
-	writeReg(spiHandle, 0x04, 0xff);
+	writeReg(spiHandle, 0x04, 0x11);
 }
 
 //---------------------------------debug----------------------------------//
@@ -746,13 +746,13 @@ void printAllRegisters(SPI_HandleTypeDef* spiHandle){
 
 	for(int i = 0x11; i <= 0x17; i++){
 
-		readReg(spiHandle, i);
+		reg = readReg(spiHandle, i);
 		sprintf(smallStrBuffer, "reg %x = %x\n", i, reg);
 		TextOut(smallStrBuffer);
 	}
 
 	for(int i = 0x1C; i <= 0x1D; i++){
-		readReg(spiHandle, i);
+		reg = readReg(spiHandle, i);
 		sprintf(smallStrBuffer, "reg %x = %x\n", i, reg);
 		TextOut(smallStrBuffer);
 	}
@@ -774,8 +774,9 @@ void initRobo(SPI_HandleTypeDef* spiHandle, uint8_t freqChannel, uint8_t address
 	uint8_t dataPipeArray[6] = {1, 1, 0, 0, 0, 0};
 	setDataPipeArray(spiHandle, dataPipeArray);
 
-	//set the RX buffer size to 8 bytes
-	setRXbufferSize(spiHandle, 8);
+	//set the RX buffer size to 12 bytes
+	setRXbufferSize(spiHandle, 12);
+
 
 	uint8_t addressLong[5] = {0x12, 0x34, 0x56, 0x78, 0x90 + address};
 	//uint8_t addressLong[5] = {0xA8, 0xA8, 0xE1, 0xF0, 0xC6};
@@ -807,12 +808,12 @@ void initBase(SPI_HandleTypeDef* spiHandle, uint8_t freqChannel, uint8_t address
 	setDataPipeArray(spiHandle, dataPipeArray);
 
 	//set the RX buffer size to 8 bytes
-	setRXbufferSize(spiHandle, 8);
+	setRXbufferSize(spiHandle, 12);
 
 	//set the TX address of
 	setTXaddress(spiHandle, address);
 
-	//setLowSpeed(spiHandle);
+	setLowSpeed(spiHandle);
 
 	//go to TX mode and be ready to listen
 	powerUpTX(spiHandle);
@@ -821,7 +822,7 @@ void initBase(SPI_HandleTypeDef* spiHandle, uint8_t freqChannel, uint8_t address
 uint8_t sendPacketPart1(SPI_HandleTypeDef* spiHandle, uint8_t packet[8]){
 	uint8_t addressLong[5] = {0x12, 0x34, 0x56, 0x78, 0x97};//{0x12, 0x34, 0x56, 0x78, 0x90 + (packet[0] >> 4)};
 	setTXaddress(spiHandle, addressLong);
-	sendData(spiHandle, packet, 8);
+	sendData(spiHandle, packet, 12);
 	return addressLong[4];
 }
 
@@ -855,11 +856,15 @@ void waitAck(SPI_HandleTypeDef* spiHandle, uint8_t roboID){
 void roboCallback(SPI_HandleTypeDef* spiHandle, dataPacket* dataStruct){
 	uint8_t dataArray[12];
 
+
+
 	ceLow(spiHandle);
 	readData(spiHandle, dataArray, 12);
 	//clear RX interrupt
 	writeReg(spiHandle, 0x07, 0x4E);
 	ceHigh(spiHandle);
+
+
 
 	dataStruct->robotID = dataArray[0] >> 4;
 	dataStruct->robotVelocity = ((dataArray[0] & 0x0F) << 9) + (dataArray[1] << 1) + ((dataArray[2] & 0x80) >> 7);
@@ -872,11 +877,11 @@ void roboCallback(SPI_HandleTypeDef* spiHandle, dataPacket* dataStruct){
 	dataStruct->forced = dataArray[6] & 0x10;
 	dataStruct->driblerDirection = dataArray[6] & 0x8;
 	dataStruct->driblerSpeed = dataArray[6] & 0x7;
-	dataStruct->currentRobotVelocity = (dataArray[8] << 5) + ((dataArray[9] & 0xF8) >> 3);
-	dataStruct->currentMovingDirection = ((dataArray[9] & 0x07) << 6) + ((dataArray[10] & 0xFC) >> 2);
-	dataStruct->currentRotationDirection = (dataArray[11] & 0x40) >> 6;
-	dataStruct->currentAngularVelocity = ((dataArray[10] &0x03) << 9) + (dataArray[11] << 1) + (dataArray[12] & 0x80);
-	dataStruct->videoDataSend = (dataArray[7] & 80) >> 7;
+	dataStruct->currentRobotVelocity = (dataArray[7] << 5) + ((dataArray[8] & 0xF8) >> 3);
+	dataStruct->currentMovingDirection = ((dataArray[8] & 0x07) << 6) + ((dataArray[9] & 0xFC) >> 2);
+	dataStruct->currentRotationDirection = (dataArray[10] & 0x40) >> 6;
+	dataStruct->currentAngularVelocity = ((dataArray[9] &0x03) << 9) + (dataArray[10] << 1) + (dataArray[11] & 0x80);
+	dataStruct->videoDataSend = (dataArray[6] & 0x80) >> 7;
 
 }
 
@@ -910,6 +915,9 @@ void printDataStruct(dataPacket* dataStruct){
 	sprintf(smallStrBuffer, "currentRotationDirection = %i\n", dataStruct->currentRotationDirection);
 	TextOut(smallStrBuffer);
 	sprintf(smallStrBuffer, "currentAngularVelocity = %i\n", dataStruct->currentAngularVelocity);
+	TextOut(smallStrBuffer);
+	sprintf(smallStrBuffer, "videoDataSend = %i\n", dataStruct->videoDataSend);
+	TextOut(smallStrBuffer);
 }
 
 
