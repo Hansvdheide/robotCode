@@ -17,12 +17,12 @@ void splitVector(float magnitude, float direction, float* xComponent, float* yCo
 /*calculates the speeds of the motor gives a carthesian vector and a a rotational velocity
 * the function updates the values in the velocity struct
 */
-void calcMotorRaw(wheelVelocityPacket* calcpacket, float vx, float vy, uint16_t w, uint8_t rotDir);
+void calcMotorRaw(wheelVelocityPacket* calcpacket, float* prevWheelCommand, float vx, float vy, uint16_t w, uint8_t rotDir);
 
 /* Calculates the speed of the motor given the datapacket of the PC
 * the function updates the values in the velocity struct
 */
-void calcMotorSpeed(dataPacket *datastruct, wheelVelocityPacket *PacketSpeed);
+void calcMotorSpeed(dataPacket *datastruct, wheelVelocityPacket *PacketSpeed, float *prevWheelCommand);
 
 /* Calculates the speed of the motor given the Stefans method of the PC
 * the function updates the values in the velocity struct

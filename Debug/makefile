@@ -30,13 +30,13 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: HansRikFusion.elf
+all: robotCode.elf
 
 # Tool invocations
-HansRikFusion.elf: $(OBJS) $(USER_OBJS)
+robotCode.elf: $(OBJS) $(USER_OBJS) ../STM32F303VCTx_FLASH.ld
 	@echo 'Building target: $@'
 	@echo 'Invoking: MCU GCC Linker'
-	arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F303VCTx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -lm -o "HansRikFusion.elf" @"objects.list" $(USER_OBJS) $(LIBS) -u _printf_float
+	arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F303VCTx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "robotCode.elf" @"objects.list" $(USER_OBJS) $(LIBS) -u _printf_float -lm
 	@echo 'Finished building target: $@'
 	@echo ' '
 	$(MAKE) --no-print-directory post-build
@@ -48,8 +48,8 @@ clean:
 
 post-build:
 	-@echo 'Generating binary and Printing size information:'
-	arm-none-eabi-objcopy -O binary "HansRikFusion.elf" "HansRikFusion.bin"
-	arm-none-eabi-size "HansRikFusion.elf"
+	arm-none-eabi-objcopy -O binary "robotCode.elf" "robotCode.bin"
+	arm-none-eabi-size "robotCode.elf"
 	-@echo ' '
 
 .PHONY: all clean dependents

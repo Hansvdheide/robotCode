@@ -40,14 +40,14 @@ void splitVector(float magnitude, float direction, float* xComponent, float* yCo
 	*yComponent = sinDir*magnitude;
 }
 
-void calcMotorRaw(wheelVelocityPacket* calcPacket, float vx, float vy, uint16_t w, uint8_t rotDir){
+void calcMotorRaw(wheelVelocityPacket* calcPacket, float* prevWheelCommand, float vx, float vy, uint16_t w, uint8_t rotDir){
 	float wRadPerSec = (w/180.0)*PI;
 
-	float vxMPerSec = vx;
-	float vyMPerSec = vy;
+//	float vxMPerSec = vx;
+//	float vyMPerSec = vy;
 
-	//sprintf(smallStrBuffer, "vxMPerSec:  %f,   vyMPerSec:  %f\n", vxMPerSec, vyMPerSec);
-	//TextOut(smallStrBuffer);
+	float accStep = 3.0;
+	float accSlowlyUntil = 0.0;
 
 	float wheelScalar = 1/_r;
 	float angularComponent;
@@ -68,14 +68,40 @@ void calcMotorRaw(wheelVelocityPacket* calcPacket, float vx, float vy, uint16_t 
 	angularComponent = rotSign*_R*wRadPerSec;
 
 	speedmotor[0] = (-cos(_a0)*vy*1.4 + sin(_a0)*vx + angularComponent)*wheelScalar;
+	if ((fabs(speedmotor[0]) - fabs(prevWheelCommand[0])) >= accStep && fabs(prevWheelCommand[0]) <= accSlowlyUntil) {
+		int signSpeed = speedmotor[0] / fabs(speedmotor[0]);
+		speedmotor[0] = prevWheelCommand[0] + accStep * signSpeed;
+	}
+	prevWheelCommand[0] = speedmotor[0];
 	calcPacket->velocityWheel1=calcFPGAFromRPS(speedmotor[0] / (2*PI));
+
 	speedmotor[1] = (-cos(_a1)*vy *1.4+ sin(_a1)*vx + angularComponent)*wheelScalar;
+	if ((fabs(speedmotor[1]) - fabs(prevWheelCommand[1])) >= accStep && fabs(prevWheelCommand[1]) <= accSlowlyUntil) {
+		int signSpeed = speedmotor[1] / fabs(speedmotor[1]);
+		speedmotor[1] = prevWheelCommand[1] + accStep * signSpeed;
+	}
+	prevWheelCommand[1] = speedmotor[1];
 	calcPacket->velocityWheel2=calcFPGAFromRPS(speedmotor[1] / (2*PI));
+
 	speedmotor[2] = (-cos(_a2)*vy*1.4 + sin(_a2)*vx + angularComponent)*wheelScalar;
+	if ((fabs(speedmotor[2]) - fabs(prevWheelCommand[2])) >= accStep && fabs(prevWheelCommand[2]) <= accSlowlyUntil) {
+		int signSpeed = speedmotor[2] / fabs(speedmotor[2]);
+		speedmotor[2] = prevWheelCommand[2] + accStep * signSpeed;
+	}
+	prevWheelCommand[2] = speedmotor[2];
 	calcPacket->velocityWheel3=calcFPGAFromRPS(speedmotor[2] / (2*PI));
-    speedmotor[3] = (-cos(_a3)*vy*1.4 + sin(_a3)*vx + angularComponent)*wheelScalar;
+
+	speedmotor[3] = (-cos(_a3)*vy*1.4 + sin(_a3)*vx + angularComponent)*wheelScalar;
+	if ((fabs(speedmotor[3]) - fabs(prevWheelCommand[3])) >= accStep && fabs(prevWheelCommand[3]) <= accSlowlyUntil) {
+		int signSpeed = speedmotor[3] / fabs(speedmotor[3]);
+		speedmotor[3] = prevWheelCommand[3] + accStep * signSpeed;
+	}
+    prevWheelCommand[3] = speedmotor[3];
     calcPacket->velocityWheel4=calcFPGAFromRPS(speedmotor[3] / (2*PI));
 
+//    sprintf(smallStrBuffer, "prevWheelCommand: %f   %f   %f   %f\n", prevWheelCommand[0], prevWheelCommand[1], prevWheelCommand[2], prevWheelCommand[3]);
+    sprintf(smallStrBuffer, "wheelcommands: %f %f %f %f\n", speedmotor[0], speedmotor[1], speedmotor[2], speedmotor[3]);
+    TextOut(smallStrBuffer);
 
 }
 void calcMotorStefan(dataPacket *dataStruct, wheelVelocityPacket *PacketSpeed){
@@ -95,7 +121,7 @@ void calcMotorStefan(dataPacket *dataStruct, wheelVelocityPacket *PacketSpeed){
 //	PacketSpeed->velocityWheel4=calcFPGAFromRPS(speedmotor[3]);
 }
 
-void calcMotorSpeed (dataPacket *dataStruct, wheelVelocityPacket *packetSpeed){
+void calcMotorSpeed (dataPacket *dataStruct, wheelVelocityPacket *packetSpeed, float *prevWheelCommand){
 	//see the paint file for clarification
 	float xSpeed=0;
 	float ySpeed=0;
@@ -103,7 +129,7 @@ void calcMotorSpeed (dataPacket *dataStruct, wheelVelocityPacket *packetSpeed){
 
 
 	splitVector((float)dataStruct->robotVelocity, (float)dataStruct->movingDirection, &xSpeed, &ySpeed);
-	calcMotorRaw(packetSpeed, xSpeed, ySpeed,  dataStruct->angularVelocity, dataStruct->rotationDirection);
+	calcMotorRaw(packetSpeed, prevWheelCommand, xSpeed, ySpeed,  dataStruct->angularVelocity, dataStruct->rotationDirection);
 }
 
 float calcRPSFromFGPA(int32_t iFPGASpeed){

@@ -53,7 +53,7 @@ f  * File Name          : main.c
 #include "TextOut.h"
 #include "string.h"
 #include "commsfpga.h"
-#include "speedCalc.h"
+#include "speedcalc.h"
 
 /* USER CODE END Includes */
 
@@ -139,6 +139,9 @@ int main(void)
 
   wheelVelocityPacket backWheely;
 
+//  wheelVelocityPacket prevWheelCommand;
+  float prevWheelCommand[4];
+
   uint8_t address = 3;
   uint8_t freqChannel =  0x2A;
   nssHigh(&hspi3);
@@ -198,7 +201,7 @@ int main(void)
 			  printDataStruct(&dataStruct);
 		  }
 		  //TextOut("Hoera!\n");
-		  calcMotorSpeed(&dataStruct, &wheely);
+		  calcMotorSpeed(&dataStruct, &wheely, &prevWheelCommand);
 		  if(showCalculation){
 			  sprintf(smallStrBuffer, "wheely: %i   %i   %i   %i\n", wheely.velocityWheel1, wheely.velocityWheel2, wheely.velocityWheel3, wheely.velocityWheel4);
 			  TextOut(smallStrBuffer);
@@ -215,7 +218,7 @@ int main(void)
 		initRobo(&hspi3, 0x2A, address);
 		breakCnt = 0;
 	}
-	//breakCnt++;
+	breakCnt++;
 
 
 	if(usbLength != 0){
