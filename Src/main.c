@@ -113,6 +113,7 @@ int main(void)
   uint8_t showPacket = 0;
   uint8_t showCalculation = 0;
   uint8_t showFPGAdebug = 0;
+  uint8_t comFailSecurity = 1;
   //HAL_Delay(1000);
   if (HAL_TIM_PWM_ConfigChannel(&htim2, &dribbler, TIM_CHANNEL_2) != HAL_OK){
 		 Error_Handler();
@@ -161,7 +162,7 @@ int main(void)
   while (1)
   {
 	  if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0)){
-		  initRobo(&hspi3, 0x2A, address);
+		  //initRobo(&hspi3, freqChannel, address);
 		  printAllRegisters(&hspi3);
 		  shoot(1, &hspi3, freqChannel, address);
 		  //HAL_Delay(1000);
@@ -207,7 +208,9 @@ int main(void)
 
 	  //REMOVED DELAY
 	  HAL_Delay(1);
-	if(breakCnt == 250){
+
+
+	if(breakCnt >= 250 && comFailSecurity == 1){
 		wheely.velocityWheel1 = 0;
 		wheely.velocityWheel2 = 0;
 		wheely.velocityWheel3 = 0;
@@ -215,7 +218,10 @@ int main(void)
 		initRobo(&hspi3, 0x2A, address);
 		breakCnt = 0;
 	}
-	//breakCnt++;
+
+	breakCnt++;
+
+
 
 
 	if(usbLength != 0){
@@ -314,8 +320,18 @@ int main(void)
 					TextOut("showFPGAdebug disabled\n");
 				}
 			}
+			else if(usbData[i] == 'b'){
+				if(comFailSecurity == 0){
+					comFailSecurity = 1;
+					TextOut("comFailSecurity enabled\n");
+				}
+				else{
+					comFailSecurity = 0;
+					TextOut("comFailSecurity disabled\n");
+				}
+			}
 			else if(usbData[i] == 'r'){
-				initRobo(&hspi3, freqChannel, address);
+				//initRobo(&hspi3, freqChannel, address);
 				printAllRegisters(&hspi3);
 			}
 			else if(usbData[i] != 0){
@@ -453,7 +469,9 @@ void shoot(uint8_t intensity, SPI_HandleTypeDef* spiHandle, uint8_t freqChannel,
 	//wheely.velocityWheel2 = intToMotor;
 	//wheely.velocityWheel3 = -intToMotor;
 	//wheely.velocityWheel4 = -intToMotor;
+	//HAL_Delay(100);
 	//initRobo(spiHandle, freqChannel, address);
+	//HAL_Delay(100);
 }
 
 /* USER CODE END 4 */
