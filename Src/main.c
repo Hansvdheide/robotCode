@@ -139,10 +139,10 @@ int main(void)
 
   wheelVelocityPacket backWheely;
 
-//  wheelVelocityPacket prevWheelCommand;
   float prevWheelCommand[4];
 
   uint8_t address = 3;
+
   uint8_t freqChannel =  0x2A;
   nssHigh(&hspi3);
   HAL_Delay(100);
@@ -318,10 +318,12 @@ int main(void)
 				}
 			}
 			else if(usbData[i] == 'r'){
+				initRobo(&hspi3, freqChannel, address);
 				printAllRegisters(&hspi3);
 			}
 			else if(usbData[i] != 0){
 				TextOut("no number send\n");
+
 
 				stopSending = 0;
 				intToMotor = 0;
