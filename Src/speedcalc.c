@@ -43,11 +43,8 @@ void splitVector(float magnitude, float direction, float* xComponent, float* yCo
 void calcMotorRaw(wheelVelocityPacket* calcPacket, float* prevWheelCommand, float vx, float vy, uint16_t w, uint8_t rotDir){
 	float wRadPerSec = (w/180.0)*PI;
 
-//	float vxMPerSec = vx;
-//	float vyMPerSec = vy;
-
-	float accStep = 3.0;
-	float accSlowlyUntil = 0.0;
+	float accStep = 1.0;
+	float accSlowlyUntil = 15.0;
 
 	float wheelScalar = 1/_r;
 	float angularComponent;
@@ -60,10 +57,6 @@ void calcMotorRaw(wheelVelocityPacket* calcPacket, float* prevWheelCommand, floa
 	else{
 		rotSign = 1;
 	}
-
-	//x positive = forward
-	//y positive = left
-
 
 	angularComponent = rotSign*_R*wRadPerSec;
 
@@ -99,9 +92,8 @@ void calcMotorRaw(wheelVelocityPacket* calcPacket, float* prevWheelCommand, floa
     prevWheelCommand[3] = speedmotor[3];
     calcPacket->velocityWheel4=calcFPGAFromRPS(speedmotor[3] / (2*PI));
 
-//    sprintf(smallStrBuffer, "prevWheelCommand: %f   %f   %f   %f\n", prevWheelCommand[0], prevWheelCommand[1], prevWheelCommand[2], prevWheelCommand[3]);
-    sprintf(smallStrBuffer, "wheelcommands: %f %f %f %f\n", speedmotor[0], speedmotor[1], speedmotor[2], speedmotor[3]);
-    TextOut(smallStrBuffer);
+//    sprintf(smallStrBuffer, "wheelcommands: %f %f %f %f\n", speedmotor[0], speedmotor[1], speedmotor[2], speedmotor[3]);
+//    TextOut(smallStrBuffer);
 
 }
 void calcMotorStefan(dataPacket *dataStruct, wheelVelocityPacket *PacketSpeed){
