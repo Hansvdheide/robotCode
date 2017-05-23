@@ -774,10 +774,6 @@ void initRobo(SPI_HandleTypeDef* spiHandle, uint8_t freqChannel, uint8_t address
 	uint8_t dataPipeArray[6] = {1, 1, 0, 0, 0, 0};
 	setDataPipeArray(spiHandle, dataPipeArray);
 
-	//set the RX buffer size to 12 bytes
-	setRXbufferSize(spiHandle, 12);
-
-
 	uint8_t addressLong[5] = {0x12, 0x34, 0x56, 0x78, 0x90 + address};
 	//uint8_t addressLong[5] = {0xA8, 0xA8, 0xE1, 0xF0, 0xC6};
 	//set the RX address of channel 1
@@ -786,6 +782,9 @@ void initRobo(SPI_HandleTypeDef* spiHandle, uint8_t freqChannel, uint8_t address
 	setLowSpeed(spiHandle);
 
 	enableAutoRetransmitSlow(spiHandle);
+
+	//set the RX buffer size to 12 bytes
+	setRXbufferSize(spiHandle, 12);
 
 	//go to RX mode and start listening
 	powerUpRX(spiHandle);
