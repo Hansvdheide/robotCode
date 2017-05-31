@@ -450,8 +450,8 @@ void shoot(uint8_t intensity, SPI_HandleTypeDef* spiHandle, uint8_t freqChannel,
 	//kickpulse.Pulse = intensity;
 	int delay;
 
-	kickpulse.Pulse = 15;
-	delay = 3;
+	kickpulse.Pulse = 259;
+	delay = 10;
 
 	if (HAL_TIM_PWM_ConfigChannel(&htim1, &kickpulse, TIM_CHANNEL_1) != HAL_OK){
 		Error_Handler();
@@ -465,6 +465,8 @@ void shoot(uint8_t intensity, SPI_HandleTypeDef* spiHandle, uint8_t freqChannel,
 	}
 	HAL_Delay(10);
 	HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_1);
+
+	TextOut("shoot!\n");
 
 	//wheely.velocityWheel1 = intToMotor;
 	//wheely.velocityWheel2 = intToMotor;
